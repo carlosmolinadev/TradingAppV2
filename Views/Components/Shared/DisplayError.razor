@@ -1,0 +1,11 @@
+<div hx-target="bad-request-error" class="toast toast-top toast-center"
+    _="on load wait 1s then transition opacity to 0 then remove me">
+    <div class="alert alert-error">
+        <span>@Error</span>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Error { get; set; }
+}

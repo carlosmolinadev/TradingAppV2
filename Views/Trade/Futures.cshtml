@@ -1,0 +1,152 @@
+@model FuturesPage
+@{
+    ViewData["Title"] = "Futures";
+}
+
+<div class="container m-auto">
+    <div class="flex flex-col sm:flex-row">
+        <div class="flex flex-col items-center w-full">
+            <label class="w-full max-w-xs form-control">
+                <div class="label">
+                    <span class="label-text">Select exchange*</span>
+                </div>
+                <select class="w-full max-w-xs select select-bordered" id="exchange-id" name="exchange">
+                    @foreach (var option in Model.ExchangeOptions)
+                    {
+                        <option value=@option.Value>@option.DisplayValue</option>
+                    }
+                </select>
+            </label>
+        </div>
+
+        <div class="relative flex flex-col items-center w-full">
+            <label class="w-full max-w-xs form-control">
+                <div class="label">
+                    <span class="label-text">Select symbol*</span>
+                </div>
+                <select class="w-full max-w-xs select select-bordered" id="symbol-id" name="symbol">
+                    @foreach (var option in Model.SymbolOptions)
+                    {
+                        <option value=@option.Value>@option.DisplayValue</option>
+                    }
+                </select>
+            </label>
+        </div>
+
+        <div class="flex flex-col items-center w-full">
+            <label class="w-full max-w-xs form-control">
+                <div class="label">
+                    <span class="label-text">Select balance*</span>
+                    <span id="balance-spinner" class="label-text htmx-indicator loading loading-bars"></span>
+                </div>
+                <select class="w-full max-w-xs select select-bordered" name="balance"
+                    hx-get="futures/prompt-option/balance" hx-trigger="load from:#exchange-id, change from:#exchange-id"
+                    hx-include="[name='exchange']" hx-indicator="#balance-spinner">
+                    @foreach (var option in Model.BalanceOptions)
+                    {
+                        <option value=@option.Value>@option.DisplayValue</option>
+                    }
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row">
+        <div class="flex flex-col items-center w-full">
+            <label class="w-full max-w-xs form-control">
+                <div class="label">
+                    <span class="label-text">Select order type*</span>
+                </div>
+                <select class="w-full max-w-xs select select-bordered" id="order-type-id" name="order-type">
+                    @foreach (var option in Model.OrderTypeOptions)
+                    {
+                        <option value=@option.Value>@option.DisplayValue</option>
+                    }
+                </select>
+            </label>
+        </div>
+
+        <div class="flex flex-col items-center w-full">
+            <label class="w-full max-w-xs form-control">
+                <div class="label">
+                    <span class="label-text">Price*</span>
+                </div>
+                <input type="text" id="price-id" name="price" value=@(Model.Price ?? Model.Price)
+                    class="w-full max-w-xs input input-bordered" />
+            </label>
+        </div>
+
+        <div class="flex flex-col items-center w-full">
+            <div class="flex">
+                <label class="flex-grow-0 form-control">
+                    <div class="label">
+                        <span class="label-text">Amount*</span>
+                    </div>
+                    <input type="text" id="amount-id" name="amount" class="w-full max-w-xs input input-bordered" />
+                </label>
+                <button class="mt-9 btn btn-primary"
+                    _="on click get #symbol-id then set lens to its value.slice(3) then log lens ">USDT</button>
+            </div>
+        </div>
+    </div>
+    <button class="focus:outline-none focus:ring">Hi there</button>
+    <div class="flex flex-col sm:flex-row">
+        @if (Model.TradeSetting != null)
+        {
+            <div class="flex flex-col">
+                <p>Name: @Model.TradeSetting.Name</p>
+                <p>Risk Reward: @Model.TradeSetting.RiskReward</p>
+                <p>Retry Attempt: @Model.TradeSetting.RetryAttempt</p>
+                <p>Risk reward: @Model.TradeSetting.RiskReward</p>
+            </div>
+        }
+        else
+        {
+            <button class="btn btn-primary">Add settings</button>
+        }
+    </div>
+</div>
+
+<div id="bad-request-error" style="display: none;">
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <div class="cursor-pointer toast toast-top toast-center" style="display: none;"
+    _="on load wait 0.2s then show then wait 2s then transition opacity to 0 then on click transition opacity to 0">
+    <span>@ViewBag.Error</span>
+</div>
+}
+
+<style>
+</style>
+
+<script>
+
+</script>
+
+@* <div class="form-control">
+<label class="flex justify-center cursor-pointer">
+<input type="checkbox" checked="checked" class="mr-1 checkbox" />
+<span class="text-center">Remember me</span>
+</label>
+
+<label class="w-full max-w-xs form-control">
+<div class="label">
+<span class="label-text">Select symbol*</span>
+</div>
+<input id="symbol-id" type="text" placeholder="Search" autocomplete="off"
+class="w-full max-w-xs input input-bordered" _="on input show #option-list then on input show <ul>li/> in closest <div/>
+when its textContent.toLowerCase() starts my value.toLowerCase() then on focusout wait 0.15s then hide #option-list" />
+</label>
+<ul id="option-list" style="display: none;"
+class="absolute w-full max-w-xs bg-white border border-t-0 border-gray-300 rounded-md rounded-t-none z-100 top-20">
+@foreach (var option in Model.SymbolOptions)
+{
+<li class="flex items-center pl-4 text-sm cursor-pointer hover:bg-gray-300 min-h-10" value=@option.Value
+selected=@option.Selected _="on load if my @@selected then set #symbol-id.value to @@value end then on click set
+#symbol-id.value to @@value">
+@option.DisplayValue
+</li>
+}
+</ul> *@

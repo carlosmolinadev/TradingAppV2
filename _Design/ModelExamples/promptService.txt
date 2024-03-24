@@ -1,0 +1,81 @@
+using TradingAppMvc.Application.Interfaces.Services;
+using TradingAppMvc.Application.Models.Responses;
+using TradingAppMvc.Application.Models.Shared;
+using TradingAppMvc.Domain.Entities;
+using TradingAppMvc.Domain.Enums;
+using TradingAppMvc.Domain.Repositories;
+using TradingAppMvc.Infraestructure.Repositories.Models;
+
+namespace TradingAppMvc.Application.Features
+{
+    public class PromptService : IPromptService
+    {
+        public readonly IReadRepository<Exchange> _exchangeRepo;
+        public readonly IReadRepository<Account> _accountRepo;
+        public readonly IAccountService _accountService;
+        public readonly IReadRepository<TradeSetting> _tradeSettingRepo;
+
+        public PromptService(IReadRepository<Exchange> exchangeRepo, IAccountService accountService, IReadRepository<Account> accountRepo, IReadRepository<TradeSetting> tradeParameterRepo)
+        {
+            _exchangeRepo = exchangeRepo;
+            _accountService = accountService;
+            _accountRepo = accountRepo;
+            _tradeSettingRepo = tradeParameterRepo;
+        }
+
+        public async Task<List<Prompt>> GetAccountPrompts(Guid userId)
+        {
+            var prompts = new List<Prompt>
+            {
+                Prompt.CreateSelectPrompt("exchange", "exchange", []).SetLabel("Select Exchange*"),
+                Prompt.CreateSelectPrompt("symbol", "symbol", []).SetLabel("Select Symbol*"),
+                Prompt.CreateSelectPrompt("balance", "balance", []).SetLabel("Select Balance*").SetCustomAttribute("hx-swap", "outerHTML").SetCustomAttribute("hx-trigger", "load, change from:#exchange").SetCustomAttribute("hx-include","[name=exchange]").SetCustomAttribute("hx-get", "futures/balance").SetCustomAttribute("hx-indicator", "#balance-spinner").SetLoadingIndicator()
+            };
+            var exchanges = await _exchangeRepo.GetAllEntitiesAsync();
+            var account = await _accountRepo.GetEntitiesByParameterAsync(new QueryParameter().AddEqualCondition(nameof(Account.UserId), userId));
+
+            if (!exchanges.Any() || account == null)
+            {
+                prompts[0].SetErrorMessage("Unable to find exchanges for user.");
+                return prompts;
+            }
+            var userExchanges = account.Join(exchanges, acc => acc.ExchangeId, ex => ex.Id, (acc, ex) => ex.Name).Select(v => new SelectOptionPrompt(v).SetFormat(FormatTool.FormatType.TitleCase));
+            prompts[0].SetSelectOption(userExchanges);
+            return prompts;
+        }
+
+        public async Task<List<Prompt>> GetTradeSettingPrompts(Guid userId)
+        {
+            var prompts = new List<Prompt>{
+                
+            };
+            return prompts;
+        }
+
+        public async Task<Prompt> GetAvailableBalancePrompt(Guid userId, string exchangeName)
+        {
+            var prompt =Prompt.CreateSelectPrompt("balance", "balance", []).SetCustomAttribute("hx-swap", "outerHTML").SetCustomAttribute("hx-trigger", "change from:#exchange").SetCustomAttribute("hx-include", "[name=exchange]").SetCustomAttribute("hx-get", "futures/balance").SetCustomAttribute("hx-indicator", "#balance-spinner").SetLoadingIndicator();
+
+            var exchangeId = await _exchangeRepo.GetEntityPropertiesByParameterAsync<int>(new QueryParameter().AddEqualCondition(nameof(Exchange.Name), exchangeName), [
+                "id"
+            ]);
+            var account = (await _accountRepo.GetEntitiesByParameterAsync(new QueryParameter().AddEqualCondition(nameof(Account.UserId), userId).AddEqualCondition(nameof(Account.ExchangeId), exchangeId.First()))).FirstOrDefault();
+            if (account == null)
+            {
+                prompt.SetErrorMessage("Could not find account for user");
+                return prompt;
+            }
+            var accountResponse = await _accountService.GetFuturesBalance(account);
+            if (!accountResponse.Success)
+            {
+                prompt.SetErrorMessage("Could not load assets for account");
+                return prompt;
+            }
+            account = accountResponse.Result;
+            var availableBalance = account.GetAssets().Select(a => new SelectOptionPrompt($"{a.Currency}~{a.AvailableBalance}", displayValue: string.Format("{0}: {1}", a.Currency, a.AvailableBalance)));
+
+            prompt.SetSelectOption(availableBalance);
+            return prompt;
+        }
+    }
+}

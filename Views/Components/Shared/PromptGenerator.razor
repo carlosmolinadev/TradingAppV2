@@ -1,0 +1,73 @@
+@using TradingAppMvc.Application.Models.Shared
+
+@switch (Prompt.Type)
+{
+    case Prompt.PromptType.Text:
+        @RenderTextPrompt(Prompt)
+        break;
+    
+    case Prompt.PromptType.LabelText:
+        <label class="w-full max-w-xs form-control">
+            <div class="label">
+                @if(@Prompt.Label != null){
+                    <span class="label-text">@Prompt.Label</span>
+                }
+            </div>
+            @RenderTextPrompt(Prompt)
+                @if(@Prompt.ValidationError != null){
+                    <div class="label">
+                        <span id="@(String.Format("{0}-validation", Prompt.Id))" class="label-text-alt">@Prompt.ValidationError</span>
+                    </div>
+                }
+        </label>
+        break;
+
+    case Prompt.PromptType.Select:
+        @RenderSelectPrompt(Prompt)
+        break;
+    
+    case Prompt.PromptType.LabelSelect:
+        <label class="w-full max-w-xs form-control">
+            <div class="label">
+                @if(@Prompt.Label != null){
+                    <span class="label-text">@Prompt.Label</span>
+                }
+                @if(@Prompt.LoadingIndicator){
+                    <span id="@(String.Format("{0}-spinner", Prompt.Id))" class="label-text htmx-indicator loading loading-bars"></span>
+                }
+            </div>
+            @RenderSelectPrompt(Prompt)
+                @if(@Prompt.ValidationError != null){
+                    <div class="label">
+                        <span id="@(String.Format("{0}-validation", Prompt.Id))" class="label-text-alt">@Prompt.ValidationError</span>
+                    </div>
+                }
+        </label>
+        break;
+    default:
+        break;
+}
+
+@if(Prompt.ErrorMessage != null){
+    <div hx-target="#failed-request" class="toast toast-top toast-center" _="on load wait 1s then transition opacity to 0 then remove me">
+        <div class="alert alert-error">
+            <span>@Prompt.ErrorMessage</span>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Prompt Prompt { get; set; }
+    private RenderFragment<Prompt> RenderSelectPrompt = Prompt => 
+        @<select id=@Prompt.Id name=@Prompt.Name class="w-full max-w-xs select select-bordered" @attributes=Prompt.Attributes>
+            @foreach (var option in Prompt.Options)
+            {
+                <option selected=@option.Selected disabled=@option.Disabled value=@option.Value>@option.DisplayValue</option>
+            }
+        </select>;
+
+    private RenderFragment<Prompt> RenderTextPrompt = Prompt =>
+        @<input type="text" id=@Prompt.Id placeholder=@Prompt.PlaceHolder name=@Prompt.Name class="w-full max-w-xs input input-bordered" required=@Prompt.Required @attributes=Prompt.Attributes/>;
+
+}

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TradingAppMvc</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="navbar bg-base-100">
+        <div class="flex-1">
+            <p>TRADING APP</p>
+        </div>
+        <div class="flex-none">
+            <ul class="px-1 menu menu-horizontal">
+                <li>
+                    <a href="/trade/futures">Futures</a>
+                </li>
+                <li>
+                    <a href="/trade/spot">Spot</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/path-params.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

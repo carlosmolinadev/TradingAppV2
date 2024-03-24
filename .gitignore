@@ -1,0 +1,68 @@
+# Ignore Visual Studio files
+.vs/
+*.vscode/
+*.suo
+*.user
+*.sln.docstates
+
+# Ignore build output
+bin/
+obj/
+
+# Ignore NuGet packages
+*.nuget.props
+*.nuget.targets
+*.lock.json
+packages/
+
+# Ignore build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.zip
+
+# Ignore Visual Studio generated files
+*.obj
+*.cache
+*.jfm
+*.pdb
+*.userprefs
+*.vspscc
+*.vssscc
+*.scc
+
+# Ignore Resharper files
+_ReSharper*/
+*.resharper
+*.resharper.user
+
+# Ignore Rider files
+.idea/
+
+# Ignore build directories
+[Bb]uild/
+
+# Ignore publish profiles
+*.pubxml
+
+# Ignore Roslyn files
+*.ide
+
+# Ignore SQL Server files
+*.mdf
+*.ldf
+
+# Ignore Windows image file cache
+Thumbs.db
+ehthumbs.db
+
+# Ignore macOS files
+.DS_Store
+
+# Ignore Unity generated files
+Library/
+Temp/
+
+node_modules/
