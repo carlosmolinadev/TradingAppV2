@@ -1,0 +1,55 @@
+@model CreateTradeModel
+@{
+   ViewData["Title"] = "CreateTrade";
+}
+
+<label class="w-full max-w-xs font-sans form-control">
+   <div class="flex items-baseline justify-between">
+      <button type="button" class="btn btn-primary">BTCUSDT</button>
+   </div>
+</label>
+
+@await Html.PartialAsync("_CreateTradeRequest", Model.Request)
+
+<div id="bad-request">
+</div>
+@* @await Html.PartialAsync("_CreateTrade", Model.CreateTradeRequest)
+
+<partial name="_TradingSetting" model="Model.TradeSetting" /> *@
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+   <div class="cursor-pointer toast toast-top toast-center" style="display: none;"
+   _="on load wait 0.2s then show then wait 2s then transition opacity to 0 then on click transition opacity to 0">
+   <div class="alert alert-error">
+      <span>@ViewBag.ErrorMessage</span>
+   </div>
+</div>
+}
+
+@* <div class="form-control">
+<label class="flex justify-center cursor-pointer">
+<input type="checkbox" checked="checked" class="mr-1 checkbox" />
+<span class="text-center">Remember me</span>
+</label>
+
+<label class="w-full max-w-xs form-control">
+<div class="label">
+<span class="label-text">Select symbol*</span>
+</div>
+<input id="symbol" type="text" placeholder="Search" autocomplete="off"
+class="w-full max-w-xs input input-bordered" _="on input show #option-list then on input show <ul>li/> in closest <div/>
+when its textContent.toLowerCase() starts my value.toLowerCase() then on focusout wait 0.15s then hide #option-list" />
+</label>
+<ul id="option-list" style="display: none;"
+class="absolute w-full max-w-xs bg-white border border-t-0 border-gray-300 rounded-md rounded-t-none z-100 top-20">
+@foreach (var option in Model.SymbolOptions)
+{
+<li class="flex items-center pl-4 text-sm cursor-pointer hover:bg-gray-300 min-h-10" value=@option.Value
+selected=@option.Selected _="on load if my @@selected then set #symbol.value to @@value end then on click set
+#symbol.value to @@value">
+@option.DisplayValue
+</li>
+}
+</ul> *@

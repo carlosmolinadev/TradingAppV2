@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Login Page";
+    Layout = "_HomeLayout";
+}
+<form class="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md border rounded-lg shadow-sm bg-card text-card-foreground">
+        <div class="flex flex-col p-4 pb-1 space-y-1">
+            <h3 class="text-2xl font-bold tracking-tight whitespace-nowrap">Welcome Back</h3>
+            <p class="text-sm text-muted-foreground">Enter your username and password to sign in to your account.
+            </p>
+        </div>
+        <div class="p-4 space-y-4">
+            <div class="space-y-2">
+                <label
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    for="username">
+                    Username
+                </label>
+                <input
+                    class="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    id="username" name="username" />
+            </div>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="password">
+                        Password
+                    </label>
+                    <a class="text-sm underline" href="#">
+                        Forgot Password?
+                    </a>
+                </div>
+                <input
+                    class="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    type="password" id="password" name="password" />
+            </div>
+            <div class="flex">
+                <button class="mx-2 font-medium btn btn-primary" type="button" hx-post="/account/login"
+                    hx-target="closest form" hx-swap="outerHTML">
+                    Sign In
+                </button>
+                <button class="font-medium btn btn-primary" type="button" hx-post="/account/register">
+                    Register
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

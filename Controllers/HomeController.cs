@@ -17,23 +17,12 @@ public class HomeController : Controller
     }
 
     [Route("~/")]
-    [Route("index")]
     public IActionResult Index()
     {
-        return View();
-    }
-
-    [HttpGet("privacy")]
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [HttpGet("welcome")]
-    public IActionResult GetWelcomeComponent()
-    {
-        var order = new TradeOrder(){Symbol = "USDT"};
-        //return new RazorComponentResult<Welcome>(new { Message = "Hello, world!" });
+        if (User.Identity != null && !User.Identity.IsAuthenticated)
+        {
+            return View("Login");
+        }
         return View();
     }
 }
