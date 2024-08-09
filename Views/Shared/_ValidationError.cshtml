@@ -1,0 +1,12 @@
+@model IEnumerable<ValidationError>
+
+<div id="bad-request"></div>
+@foreach (var validationError in Model)
+{
+   <div class="label" id="validation-@validationError.Key.ToLower()" hx-swap-oob="true">
+   @foreach (var error in validationError.Errors)
+      {
+         <p class="text-red-500 label-text-alt">@error</p>
+      }
+   </div>
+}

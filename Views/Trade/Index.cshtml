@@ -1,6 +1,28 @@
-﻿@model TradePage
+﻿@model CreateTradeRequest
 @{
     ViewData["Title"] = "Trade Page";
 }
+<div id="render-body">
+    This is body
+</div>
+<div class="container m-auto">
+    <button hx-get="/trade/create-trade" hx-target="#body" hx-swap="outerHTML" hx-push-url="true"
+        class="btn btn-primary">Create
+        Trade</button>
+</div>
 
-<div>TradeIndex</div>
+@* <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+<div>Hello</div>
+<div>Hello</div>
+<div>Hello</div>
+</div>
+
+<div class="flex flex-col justify-center">
+<div class="flex-none">
+<div class="flex justify-around">
+<div>another</div>
+<div>time</div>
+</div>
+</div>
+<div class="flex justify-end">1asdadasd</div>
+</div> *@

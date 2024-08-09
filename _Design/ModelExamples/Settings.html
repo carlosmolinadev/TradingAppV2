@@ -1,0 +1,268 @@
+<!--
+// v0 by Vercel.
+// https://v0.dev/t/L0b1w2pqn2p
+-->
+
+<div class="flex flex-col w-full min-h-screen">
+  <header class="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
+    <a class="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4" href="#">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-6 h-6"
+      >
+        <line x1="22" x2="2" y1="6" y2="6"></line>
+        <line x1="22" x2="2" y1="18" y2="18"></line>
+        <line x1="6" x2="6" y1="2" y2="22"></line>
+        <line x1="18" x2="18" y1="2" y2="22"></line>
+      </svg>
+      <span class="sr-only">Acme Inc</span>
+    </a>
+    <nav class="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
+      <a class="text-muted-foreground" href="#">
+        Projects
+      </a>
+      <a class="text-muted-foreground" href="#">
+        Deployments
+      </a>
+      <a class="text-muted-foreground" href="#">
+        Analytics
+      </a>
+      <a class="text-muted-foreground" href="#">
+        Logs
+      </a>
+      <a class="font-bold" href="#">
+        Settings
+      </a>
+    </nav>
+    <div class="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
+      <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full ml-auto">
+        <img
+          src="/placeholder.svg"
+          width="32"
+          height="32"
+          class="rounded-full border"
+          alt="Avatar"
+          style="aspect-ratio:32/32;object-fit:cover"
+        />
+        <span class="sr-only">Toggle user menu</span>
+      </button>
+    </div>
+  </header>
+  <main class="flex min-h-[calc(100vh_-_theme(spacing.16))] bg-muted/40 flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
+    <div class="max-w-6xl w-full mx-auto grid gap-2">
+      <h1 class="font-semibold text-3xl">Ajustes de usuario</h1>
+    </div>
+    <div class="grid md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr] items-start gap-6 max-w-6xl w-full mx-auto">
+      <nav class="text-sm text-muted-foreground grid gap-4">
+        <a class="font-semibold text-primary" href="#">
+          Perfil
+        </a>
+        <a href="#">Contraseña</a>
+        <a href="#">Notificaciones</a>
+      </nav>
+      <div class="grid gap-6">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Perfil</h3>
+            <p class="text-sm text-muted-foreground">Actualiza tu información de perfil.</p>
+          </div>
+          <div class="p-6">
+            <form class="grid gap-4">
+              <div class="grid gap-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="name"
+                >
+                  Nombre
+                </label>
+                <input
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="text"
+                  id="name"
+                  value="John Doe"
+                />
+              </div>
+              <div class="grid gap-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="email"
+                >
+                  Correo electrónico
+                </label>
+                <input
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="email"
+                  id="email"
+                  value="john@example.com"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="flex items-center border-t p-6">
+            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Contraseña</h3>
+            <p class="text-sm text-muted-foreground">Cambia tu contraseña de acceso.</p>
+          </div>
+          <div class="p-6">
+            <form class="grid gap-4">
+              <div class="grid gap-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="current-password"
+                >
+                  Contraseña actual
+                </label>
+                <input
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="password"
+                  id="current-password"
+                  placeholder="Ingresa tu contraseña actual"
+                />
+              </div>
+              <div class="grid gap-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="new-password"
+                >
+                  Nueva contraseña
+                </label>
+                <input
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="password"
+                  id="new-password"
+                  placeholder="Ingresa tu nueva contraseña"
+                />
+              </div>
+              <div class="grid gap-2">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  for="confirm-password"
+                >
+                  Confirmar contraseña
+                </label>
+                <input
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="password"
+                  id="confirm-password"
+                  placeholder="Confirma tu nueva contraseña"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="flex items-center border-t p-6">
+            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              Cambiar contraseña
+            </button>
+          </div>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Notificaciones</h3>
+            <p class="text-sm text-muted-foreground">Configura tus preferencias de notificaciones.</p>
+          </div>
+          <div class="p-6">
+            <div class="grid gap-2">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium">Nuevos mensajes</p>
+                  <p class="text-muted-foreground text-sm">Recibe notificaciones por nuevos mensajes.</p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked="false"
+                  data-state="unchecked"
+                  value="on"
+                  class="peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+                >
+                  <span
+                    data-state="unchecked"
+                    class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+                  ></span>
+                </button>
+                <input
+                  type="checkbox"
+                  aria-hidden="true"
+                  style="transform:translateX(-100%);position:absolute;pointer-events:none;opacity:0;margin:0"
+                  tabindex="-1"
+                  value="on"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium">Actualizaciones de producto</p>
+                  <p class="text-muted-foreground text-sm">Recibe notificaciones sobre nuevas funcionalidades.</p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked="false"
+                  data-state="unchecked"
+                  value="on"
+                  class="peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+                >
+                  <span
+                    data-state="unchecked"
+                    class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+                  ></span>
+                </button>
+                <input
+                  type="checkbox"
+                  aria-hidden="true"
+                  style="transform:translateX(-100%);position:absolute;pointer-events:none;opacity:0;margin:0"
+                  tabindex="-1"
+                  value="on"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium">Alertas de seguridad</p>
+                  <p class="text-muted-foreground text-sm">Recibe notificaciones sobre problemas de seguridad.</p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked="false"
+                  data-state="unchecked"
+                  value="on"
+                  class="peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+                >
+                  <span
+                    data-state="unchecked"
+                    class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+                  ></span>
+                </button>
+                <input
+                  type="checkbox"
+                  aria-hidden="true"
+                  style="transform:translateX(-100%);position:absolute;pointer-events:none;opacity:0;margin:0"
+                  tabindex="-1"
+                  value="on"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center border-t p-6">
+            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              Guardar preferencias
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

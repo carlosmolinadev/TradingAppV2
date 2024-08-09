@@ -1,0 +1,157 @@
+@model CreateTradeRequest
+<div x-data="createTrade('@Model.TradingSettingId')">
+   <form hx-post="/trade/futures/create-trade" hx-swap="outerHTML">
+      <div class="grid grid-cols-1 gap-4 justify-items-center sm:grid-cols-2 lg:grid-cols-4">
+         <label class="w-full max-w-sm font-sans form-control">
+            <div class="label">
+               <span class="label-text">Exchange*</span>
+            </div>
+            <select class="select select-bordered" id="exchange" name="ExchangeId">
+               @foreach (var exchange in ViewBag.Exchanges)
+               {
+                  @* <option value=@exchange.Value selected=@exchange.Selected>@exchange.Text</option> *@
+                  <option value=@exchange.Value selected=@Model.ExchangeId>@exchange.Text</option>
+               }
+            </select>
+         </label>
+         @* <label class="w-full max-w-xs font-sans form-control">
+         <div class="label">
+         <span class="label-text">Currency*</span>
+         </div>
+         <select class="w-full max-w-xs select select-bordered" id="currency" name="CurrencyId">
+         @foreach (var currency in ViewBag.CurrencyList)
+         {
+         <option value=@currency.Value selected=@currency.Selected>@currency.Text</option>
+         }
+         </select>
+         using CryptoExchange.Net;
+         </label> *@
+         <label class="w-full max-w-xs form-control">
+            <div class="label">
+               <span class="label-text">Symbol*</span>
+            </div>
+            <select class="w-full max-w-xs select select-bordered" id="symbol" name="Symbol"
+               hx-trigger="change from:#order-type" hx-get="/trade/symbol-currency">
+               @foreach (var symbol in ViewBag.Symbols)
+               {
+                  <option value=@symbol.Value selected=@Model.Symbol> @symbol.Text</option>
+               }
+            </select>
+         </label>
+
+         <label class="w-full max-w-xs form-control">
+            <div class="label">
+               <span class="label-text">Order Type*</span>
+            </div>
+            <select class="w-full max-w-xs select select-bordered" id="order-type" name="OrderTypeId">
+               @foreach (var orderType in ViewBag.OrderTypes)
+               {
+                  <option value=@orderType.Value selected=@Model.Symbol>@orderType.Text</option>
+               }
+            </select>
+         </label>
+
+         <label class="w-full max-w-xs form-control">
+            <div class="label">
+               <span class="label-text">Price*</span>
+            </div>
+            <input type="text" id="price" name="price" class="w-full max-w-xs input input-bordered" x-model="price">
+         </label>
+
+         <label class="w-full max-w-xs form-control">
+            <div class="label">
+               <span class="label-text">Quantity*</span>
+            </div>
+            <input asp-for="Quantity" type="text" id="quantity" name="quantity" hx-get="/trade/amount-quantity"
+               class="w-full max-w-xs input input-bordered" />
+         </label>
+
+         <label class="w-full max-w-xs form-control" id="amount">
+            <div class="label">
+               <span class="label-text">Amount*</span>
+            </div>
+            <input asp-for="Amount" type="text" id="amount" name="amount" class="w-full max-w-xs input input-bordered"
+               x-on:focusout="setQuantity()" x-model="amount" x-on:click="clearValidationError($el)" />
+            <div id="validation-amount"></div>
+         </label>
+
+         <div class="flex w-full max-w-xs ">
+            <label class=" form-control grow">
+               <div class="label">
+                  <span class="label-text">StopLoss</span>
+               </div>
+               <input type="text" id="stop-loss" name="stoploss" class="w-full max-w-xs input input-bordered" />
+            </label>
+            <button type="button" class="mt-9 btn btn-accent">%</button>
+         </div>
+
+         <div class="w-full max-w-xs form-control">
+            <div class="flex">
+               <label class=" form-control grow">
+                  <div class="label">
+                     <span class="label-text">TakeProfit</span>
+                  </div>
+                  @* <input asp-for="ConditionalOrders.TriggerPrice" type="text" id="takeprofit"
+                  class="w-full max-w-xs input input-bordered" /> *@
+               </label>
+               <button type="button" class="mt-9 btn btn-primary">%</button>
+            </div>
+         </div>
+         <button type="submit" class="btn btn-success">Long</button>
+         <button type="submit" class="btn btn-error">Short</button>
+      </div>
+   </form>
+   <div id="bad-request">
+   </div>
+</div>
+@* <script src="~/js/site.js" asp-append-version="true"></script> *@
+<script>
+   document.body.addEventListener('htmx:beforeSwap', function (evt) {
+      if (evt.detail.xhr.status === 400) {
+         evt.detail.shouldSwap = true;
+         evt.detail.isError = false;
+         evt.detail.target = htmx.find("#bad-request")
+      }
+   }),
+      document.body.addEventListener('htmx:configRequest', function (evt) {
+         evt.detail.headers['userId'] = "c96666c1-2ed3-4888-b775-9f4ebe277bed";
+      });
+</script>
+
+<script>
+   document.addEventListener('alpine:init', () => {
+      Alpine.data('createTrade', (price) => {
+         console.log(price);
+         return {
+            price,
+            quantity: 0,
+            amount: 0,
+            symbolModal: false,
+            setQuantity(p) {
+               console.log(p);
+               if (!this.price) {
+                  return;
+               }
+               this.quantity = this.amount * this.price;
+            },
+            setAmount() {
+               if (!this.price) {
+                  return;
+               }
+            },
+            symbolModalHandler() {
+               this.symbolModal = !this.symbolModal
+               console.log(this.symbolModal);
+            },
+            clearValidationError(element) {
+               const div = document.createElement('div');
+               div.id = 'validation-amount';
+               const subling = element.nextElementSibling;
+               subling.remove();
+               element.insertAdjacentElement('afterend', div);
+
+            }
+         }
+      })
+   });
+</script>

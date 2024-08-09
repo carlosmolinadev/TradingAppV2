@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TradingAppMvc</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@@2.0.1"
+        integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="navbar bg-base-100">
+        <div class="flex-1">
+            <a href="/">TRADING APP</a>
+        </div>
+        <div class="flex-none">
+            <ul class="px-1 menu menu-horizontal">
+                <li>
+                    <a href="/trade">Trades</a>
+                </li>
+                <li>
+                    <a href="/trade/spot">Spot</a>
+                </li>
+                <li>
+                    <a href="/account/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="renderBody">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/path-params.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

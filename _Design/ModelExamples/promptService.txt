@@ -1,10 +1,10 @@
-using TradingAppMvc.Application.Interfaces.Services;
-using TradingAppMvc.Application.Models.Responses;
-using TradingAppMvc.Application.Models.Shared;
+using TradingAppMvc.Services;
+using TradingAppMvc.Models.Responses;
+using TradingAppMvc.Models.Shared;
 using TradingAppMvc.Domain.Entities;
 using TradingAppMvc.Domain.Enums;
-using TradingAppMvc.Domain.Repositories;
-using TradingAppMvc.Infraestructure.Repositories.Models;
+using TradingAppMvc.Repositories;
+using TradingAppMvc.Application.Models.Repository;
 
 namespace TradingAppMvc.Application.Features
 {
@@ -31,8 +31,8 @@ namespace TradingAppMvc.Application.Features
                 Prompt.CreateSelectPrompt("symbol", "symbol", []).SetLabel("Select Symbol*"),
                 Prompt.CreateSelectPrompt("balance", "balance", []).SetLabel("Select Balance*").SetCustomAttribute("hx-swap", "outerHTML").SetCustomAttribute("hx-trigger", "load, change from:#exchange").SetCustomAttribute("hx-include","[name=exchange]").SetCustomAttribute("hx-get", "futures/balance").SetCustomAttribute("hx-indicator", "#balance-spinner").SetLoadingIndicator()
             };
-            var exchanges = await _exchangeRepo.GetAllEntitiesAsync();
-            var account = await _accountRepo.GetEntitiesByParameterAsync(new QueryParameter().AddEqualCondition(nameof(Account.UserId), userId));
+            var exchanges = await _exchangeRepo.FindAll();
+            var account = await _accountRepo.FindByParameter(new QueryParameter().EqualCondition(nameof(Account.UserId), userId));
 
             if (!exchanges.Any() || account == null)
             {
@@ -56,10 +56,10 @@ namespace TradingAppMvc.Application.Features
         {
             var prompt =Prompt.CreateSelectPrompt("balance", "balance", []).SetCustomAttribute("hx-swap", "outerHTML").SetCustomAttribute("hx-trigger", "change from:#exchange").SetCustomAttribute("hx-include", "[name=exchange]").SetCustomAttribute("hx-get", "futures/balance").SetCustomAttribute("hx-indicator", "#balance-spinner").SetLoadingIndicator();
 
-            var exchangeId = await _exchangeRepo.GetEntityPropertiesByParameterAsync<int>(new QueryParameter().AddEqualCondition(nameof(Exchange.Name), exchangeName), [
+            var exchangeId = await _exchangeRepo.FindByParameter<int>(new QueryParameter().EqualCondition(nameof(Exchange.Name), exchangeName), [
                 "id"
             ]);
-            var account = (await _accountRepo.GetEntitiesByParameterAsync(new QueryParameter().AddEqualCondition(nameof(Account.UserId), userId).AddEqualCondition(nameof(Account.ExchangeId), exchangeId.First()))).FirstOrDefault();
+            var account = (await _accountRepo.FindByParameter(new QueryParameter().EqualCondition(nameof(Account.UserId), userId).EqualCondition(nameof(Account.ExchangeId), exchangeId.First()))).FirstOrDefault();
             if (account == null)
             {
                 prompt.SetErrorMessage("Could not find account for user");
